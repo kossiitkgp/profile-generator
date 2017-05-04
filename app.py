@@ -14,7 +14,7 @@ def repogen(user_name):
     httpob=urlopen("https://api.github.com/users/"+user_name+"/repos")
     # decoding the http object recieved
     decob=httpob.read().decode("utf-8")
-    # covrting to json
+    # converting to json
     jsonob=json.loads(decob)
     # appending only personal repos to the list
     for j in jsonob:
