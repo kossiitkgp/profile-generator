@@ -2,37 +2,39 @@ from flask import Flask, redirect, url_for, request, render_template
 from urllib.request import urlopen
 import json
 
-# global variables to store repo and repo links
-repos=[]
-repolink=[]
 
-# module to generate repo and repo links
-def repogen(user_name):
-    global repos
-    global repolink
-    # getting contents of the api for a user
-    httpob=urlopen("https://api.github.com/users/"+user_name+"/repos")
-    # decoding the http object recieved
-    decob=httpob.read().decode("utf-8")
-    # converting to json
-    jsonob=json.loads(decob)
-    # appending only personal repos to the list
-    for j in jsonob:
-        if str(j["fork"])=="False":
-            repos.append(j["full_name"])
-            repolink.append("https://www.github.com/"+j["full_name"])
+data = {"arindambiswas":{"name":"Arindam Biswas", "gh_handle":"aribis369" ,"fb_link":"https://facebook.com/aribis369", "bio":"to be written by the member", "pic_src":"link"}, "dibyaprakashdas":{"name":"Dibya Prakash Das", "gh_handle":"dibyadas", "fb_link":"https://facebook.com/user_name", "bio":"whatever you like", "pic_src":"link"}}
+
 
 app = Flask(__name__)
 
 
 @app.route('/<name>')
-def main(name):
-    global repos
-    global repolink
-    # generating repo and repolink list before rendering the html file
-    # list to be passed while rendering & some more credentials can be added 
-    repogen(name)
-    return render_template('test.html', name=name)
+def main():
+    mname = data[name]["gh_handle"]
+    repos = []
+    repolink = []
+    blog = str()
+    content={}
+    gh_link = "https://github.com/"+mname
+
+    httpob = urlopen("https://api.github.com/users/"+mname+"/repos")
+    decob = httpob.read().decode("utf-8")
+    jsonob = json.loads(decob)
+    for j in jsonob:
+        if str(j["fork"])=="False":
+            repos.append(j["name"])
+            repolink.append("https://www.github.com/"+j["full_name"])
+    
+    httpob = urlopen("https://api.github.com/users/"+mname)
+    decob = httpob.read().decode("utf-8")
+    jsonob = json.loads(decob)
+    blog = jsonob["blog"]
+
+    content = {"name":data[name]["name"], "gh_handle":data[name]["gh_handle"], "fblink":data[name]["fb_link"], "bio":data[name]["bio"], "picsrc":data[name]["pic_src"], "mrepos":repos, "mrepolink":repolink, "mblog":blog}
+
+   # return render_template('test.html', mem_name=data[name]["name"], gh_handle=data[name]["gh_handle"], fblink=data[name]["fb_link"], bio=data[name]["bio"], picsrc=data[name]["pic_src"], mrepos=repos, mrepolink=repolink, mblog=blog)
+    return render_template('test.html', content=content) 
 
 
 if __name__ == "__main__":  # This is for local testing
