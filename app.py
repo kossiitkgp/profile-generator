@@ -21,7 +21,7 @@ def mail():
 	mail = Mail(app)
 	form_data = request.form['msg']
 	msg = Message('Query',sender = 'dibyadasiscool@gmail.com', recipients = ['dibyadas998@gmail.com'])
-	msg.body = form_data
+	msg.body = "Query sent by"+request.form['name']+"\n"+form_data+"\n"+"Email-ID is:-"+request.form['email']
 	mail.send(msg)
 	return ("sent",200,{'Access-Control-Allow-Origin':'*'})
 
