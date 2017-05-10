@@ -109,7 +109,8 @@
                       <div class="ui segment"><h2>Hi, I am <b>Pranit Bauva</b>!</h2>
                       <img src="images/right.png" class="ui image" /img>
                       Indian Institute of Technology, Kharagpur</div>
-                      <div class="ui segment"> The quick brown fox jumps over a lazy dog! The quick brown fox jumps over a lazy dog! The quick brown fox jumps over a lazy dog! The quick brown fox jumps over a lazy dog! The quick brown fox jumps over a lazy dog! The quick brown fox jumps over a lazy dog! The quick brown fox jumps over a lazy dog!</div>
+                      <div class="ui segment"> The quick brown fox jumps over a lazy dog! The quick brown fox jumps over a lazy dog! The quick brown fox jumps over a lazy dog! T
+                      og! The quick brown fox jumps over a lazy dog!</div>
                       
                       <div class="ui segment"> <b>PROJECTS</b>
                       <div class="ui list">
@@ -119,15 +120,15 @@
 	      			<a class="header"><h3>Project 1</h3></a>
       				<div class="description">Desciption and <a><b>Link</b></a>.</div>
       				</div>
-                      
+                      s
                       	</div> -->
-    
-        {% for i in repos %}
+    	
+        {% for i in repo_dict %}
         	<div class="item">
 	    			<img class="ui avatar image"><i class="angle double right icon"></i></img>
 	    			<div class="content">
-	      			<a class="header"><h3>Project</h3></a>
-      				<div class="description">{{i}} and <a><b>Link</b></a>.</div>
+	      			<div class="header"><h3>Project {{loop.index}}</h3></div>  
+      				<div class="description"><a href="{{repo_dict[i]}}"><b>{{i}}</b></a></div>
       				</div>
         </div>
         {% endfor %}          

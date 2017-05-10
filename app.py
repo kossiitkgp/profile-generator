@@ -12,6 +12,9 @@ def repogen(user_name):
     global repos
     global repolink
     global image
+    repos=[]
+    repolink=[]
+    
     # getting contents of the api for a user
     httpob=requests.get("https://api.github.com/users/"+user_name+"/repos?per_page=100")
     # decoding the http object recieved
@@ -31,13 +34,11 @@ app = Flask(__name__)
 
 @app.route('/<name>')
 def main(name):
-    global repos
-    global repolink
     # generating repo and repolink list before rendering the html file
     # list to be passed while rendering & some more credentials can be added 
     repogen(name)
-
-    x = render_template('temp.html', name=name ,image=image, repos=repos)
+    repo_dict = dict(zip(repos,repolink))
+    x = render_template('temp.html', name=name ,image=image, repo_dict=repo_dict)
     with open("templates/t2.html","w") as f:
         f.write(x)
     return "True"
