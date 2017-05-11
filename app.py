@@ -1,4 +1,4 @@
-from flask import Flask, redirect, url_for, request, render_template
+from flask import Flask, redirect, url_for, request, render_template,Response
 import requests
 import json
 
@@ -14,19 +14,15 @@ def repogen(user_name):
     global image
     repos=[]
     repolink=[]
-    
-    # getting contents of the api for a user
-    httpob=requests.get("https://api.github.com/users/"+user_name+"/repos?per_page=100")
-    # decoding the http object recieved
+    auth = ("dibyadas","nandaDAS@99")
+    httpob=requests.get("https://api.github.com/users/"+user_name+"/repos?per_page=100",auth=auth)  # getting contents of the api for a user
     decob=httpob.content.decode("utf-8")
-    # converting to json
     jsonob=json.loads(decob)
     image = jsonob[0]['owner']['avatar_url']
-    # appending only personal repos to the list
     for j in jsonob:
-        if j["fork"] != True:
-            repos.append(j["full_name"])
-            repolink.append("https://www.github.com/"+j["full_name"])
+        if j["fork"] != True:       # appending only personal repos to the list
+            repos.append(j["name"])
+            repolink.append(j["html_url"])
             
 
 app = Flask(__name__)
@@ -41,7 +37,8 @@ def main(name):
     x = render_template('temp.html', name=name ,image=image, repo_dict=repo_dict)
     with open("templates/t2.html","w") as f:
         f.write(x)
-    return "True"
+    r = Response(x,200,headers={"Access-Control-Allow-Origin":"*",'Content-Type': 'text/html'})
+    return r
 
 
 if __name__ == "__main__":  # This is for local testing
