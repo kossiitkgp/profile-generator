@@ -17,6 +17,8 @@ def repogen(user_name):
     repos=[]
     repolink=[]
     httpob=requests.get("https://api.github.com/users/"+user_name+"/repos?per_page=100")  # getting contents of the api for a user
+    owner = requests.get("https://api.github.com/users/"+user_name)
+    owner_data = json.loads(owner.content.decode("utf-8"))
     decob=httpob.content.decode("utf-8")
     jsonob=json.loads(decob)
     image = jsonob[0]['owner']['avatar_url']
@@ -36,7 +38,9 @@ def main(name):
     # list to be passed while rendering & some more credentials can be added 
     repogen(name)
     repo_dict = dict(zip(repos,repolink))
-    x = render_template('temp.html', name=name ,image=image, repo_dict=repo_dict)
+    owner = requests.get("https://api.github.com/users/"+name)
+    owner_data = json.loads(owner.content.decode("utf-8"))
+    x = render_template('temp.html', name=name ,image=image, repo_dict=repo_dict,owner_data=owner_data)
     with open("templates/t2.html","w") as f:
         f.write(x)
     return Response(x,200,headers={"Access-Control-Allow-Origin":"*",'Content-Type': 'text/html'})
