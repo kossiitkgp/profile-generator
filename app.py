@@ -1,7 +1,8 @@
-from flask import Flask, redirect, url_for, request, render_template
+from flask import Flask, redirect, url_for, request, render_template,Response
 from flask_mail import Mail, Message
 import os
 import json
+import requests
 
 # global variables to store repo and repo links
 repos=[]
@@ -15,8 +16,7 @@ def repogen(user_name):
     global image
     repos=[]
     repolink=[]
-    auth = ("dibyadas","nandaDAS@99")
-    httpob=requests.get("https://api.github.com/users/"+user_name+"/repos?per_page=100",auth=auth)  # getting contents of the api for a user
+    httpob=requests.get("https://api.github.com/users/"+user_name+"/repos?per_page=100")  # getting contents of the api for a user
     decob=httpob.content.decode("utf-8")
     jsonob=json.loads(decob)
     image = jsonob[0]['owner']['avatar_url']
