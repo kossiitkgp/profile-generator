@@ -84,7 +84,22 @@ def mail():
         send_mail, [request.form['msg'],
                     request.form['name'],
                     request.form['email']])
+    # e =send_mail(request.form['msg'],request.form['name'],request.form['email'])
     return ("sent", 200, {'Access-Control-Allow-Origin': '*'})
+
+
+@app.route('/captcha',methods=['POST'])
+def captcha():
+    t = json.loads(request.data.decode("utf-8"))
+    key = t['key']
+    gcaptcha = t['gcaptcha']
+    r = requests.post("https://www.google.com/recaptcha/api/siteverify",data = { 'secret' : key, 'response' : gcaptcha } )
+    print(r.content.decode('utf-8'))
+    if json.loads(r.content.decode('utf-8'))['success'] == True:
+        return ("sent", 200, {'Access-Control-Allow-Origin': '*'})
+    else:
+        return ("Not sent", 400, {'Access-Control-Allow-Origin': '*'})
+
 
 # if __name__ == "__main__":  # This is for local testin
 #     app.run(host='localhost', port=3453, debug=True)
@@ -92,4 +107,4 @@ def mail():
 
 if __name__ == "__main__":  # This will come in use when
     port = int(os.environ.get("PORT", 5000))  # the app is deployed on heroku
-    app.run(host='0.0.0.0', port=port)
+    app.run(host='0.0.0.0', port=port,debug=True)
