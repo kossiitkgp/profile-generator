@@ -30,28 +30,24 @@
   	<br><br>
 	  <a href="http://www.fb.com"><img src="images/fb.png" /img></a> <a href="http://www.fb.com"><img src="images/fb.png" /img></a> <a href="http://www.fb.com"><img src="images/fb.png" /img></a>
 			<br><div>    &nbsp;&nbsp;&nbsp;</div><img class="ui small bordered circular left image circleborder" src="{{image}}">
-			<h3 class="ui header left aligned" id="name">{{owner_data['name']}}</h3>
+			<h3 class="ui header left aligned" id="name">{{full_name}}</h3>
 			<img src="images/left.jpeg" class="ui image" /img><br>
 			<div class="centered"> SOFTWARE DEVELOPER </div><br>
 			<img src="images/lhs.png" class="ui image" /img>
 			<div>
-			&nbsp;&nbsp;<i class="volume control phone icon"></i> +91-9932433282<br>
-			&nbsp;&nbsp;<i class="browser icon"></i> bauva.com<br>
-			&nbsp;&nbsp;<i class="mail icon"></i> {{owner_data['email']}}<br>
+			&nbsp;&nbsp;<i class="mail icon"></i> {{email}}<br>
 			</div>
 			<br>
-			&nbsp;&nbsp;MY LIFE PHILOSOPHY:
-			<h4><font color="#3366ff" size=3>“Do something cool,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;which can improve lives.”<br><br></font></h4>
 			</div>
 	
   <!-- <div class="two wide column"></div> -->
   <div class="eight wide column">
   <br><br>
                       <div class="ui right floated header">PROFILE</div><br>
-                      <div class="ui segment"><h2>Hi, I am <b>{{owner_data['name']}}</b>!</h2>
+                      <div class="ui segment"><h2>Hi, I am <b>{{full_name}}</b>!</h2>
                       <img src="images/right.png" class="ui image" /img>
                       Indian Institute of Technology, Kharagpur</div>
-                      <div class="ui segment"> {{owner_data['bio']}}</div>
+                      <div class="ui segment"> {{bio}}</div>
                       
                       <div class="ui segment"> <b>PROJECTS</b>
                       <div class="ui list">
@@ -64,12 +60,12 @@
                       s
                       	</div> -->
     	
-        {% for i in repo_dict %}
+        {% for i in range(6) %}
         	<div class="item">
 	    			<img class="ui avatar image"><i class="angle double right icon"></i></img>
 	    			<div class="content">
 	      			<div class="header"><h3>Project {{loop.index}}</h3></div>  
-      				<div class="description"><a href="{{repo_dict[i]}}"><b>{{i}}</b></a></div>
+      				<div class="description"><a href="{{pinned_repos[i]['url']}}"><b>{{pinned_repos[i]['name']}}</b></a></div>
       				</div>
         </div>
         {% endfor %}          
@@ -77,7 +73,7 @@
                       </div>
                       </div>
                       
-                    <a class="ui large button" href="{{owner_data['blog']}}">Blog</a><a class="ui large button" href="{{owner_data['html_url']}}"><i class="github icon"></i> GitHub</a><br><br>
+                    <a class="ui large button" href="{{blog}}">Blog</a><a class="ui large button" href="{{gh_link}}"><i class="github icon"></i> GitHub</a><br><br>
   
   </div>
     <div class="two wide column">
