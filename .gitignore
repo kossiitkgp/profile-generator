@@ -1,2 +1,4 @@
 flask/
-templates/t2.html
+pages/
+cards/
+key.env
