@@ -1,1 +1,4 @@
 flask/
+pages/
+cards/
+key.env

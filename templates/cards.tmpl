@@ -1,0 +1,14 @@
+<div class="ui fluid card">
+   <article class="col-sm-6 profile">
+      <div class="profile-header">
+         <img class="ui circular image" width="100px" height="100px" src="{{image}}" >
+      </div>
+      <div class="profile-content">
+         <h3><a href="../profiles/{{name}}.html">{{full_name}}</a></h3>
+         <div class="lead position">{% if position %}{{position}}{% else %}{% endif %}</div>
+         <a href="https://github.com/{{name}}">
+            <div class="ui button"><i class="github icon"></i>Follow <i>@{{name}}</i></div>
+         </a>
+      </div>
+   </article>
+</div>
